@@ -1,0 +1,30 @@
+<MainLayout>:
+    orientation: 'horizontal'
+    canvas:
+        Color:
+            rgb: 0.8, 0.9, 1.0
+        Rectangle:
+            size: self.size
+    BoxLayout:
+        size_hint: (0.7, 1.0)
+        canvas:
+            Color:
+                rgb: 0.8, 0.7, 0.6
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Button:
+        Button:
+        Button:
+    StackLayout:
+        size_hint: (0.3, 1.0)
+        canvas:
+            Color:
+                rgb: 0.4, 0.5, 0.6
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            size_hint: (1.0, None)
+            text: '[color=cccccc][b]move right 2[/b][/color]\n[color=cccccc][b]move right 2[/b][/color]\n[color=cccccc][b]move right 2[/b][/color]\n'
+            markup: True
