@@ -1,11 +1,13 @@
 <MainLayout>:
+    cell_grid: cell_grid
     orientation: 'horizontal'
     canvas:
         Color:
             rgb: 0.8, 0.9, 1.0
         Rectangle:
             size: self.size
-    BoxLayout:
+    FloatLayout:
+        id: cell_grid
         size_hint: (0.7, 1.0)
         canvas:
             Color:
@@ -13,9 +15,6 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
-        Button:
-        Button:
-        Button:
     StackLayout:
         size_hint: (0.3, 1.0)
         canvas:
@@ -24,7 +23,34 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
+        Button:
+            size_hint: (1.0, None)
+            on_press: root.open_command_popup()
         Label:
             size_hint: (1.0, None)
             text: '[color=cccccc][b]move right 2[/b][/color]\n[color=cccccc][b]move right 2[/b][/color]\n[color=cccccc][b]move right 2[/b][/color]\n'
             markup: True
+
+
+<Cell>:
+    size_hint: (0.2, 0.2)
+    canvas:
+        Color:
+            rgb: 0.0, 0.0, 0.0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgb: 0.9, 0.9, 0.9
+        Rectangle:
+            pos: (self.x + 1, self.y + 1)
+            size: (self.width - 2, self.height - 2)
+
+<Voloda>:
+    size_hint: (0.2, 0.2)
+    canvas:
+        Color:
+            rgb: 0.0, 0.0, 0.0
+        Ellipse:
+            pos: self.pos
+            size: self.size
