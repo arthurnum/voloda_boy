@@ -25,7 +25,12 @@
                 size: self.size
         Button:
             size_hint: (1.0, None)
+            text: 'Commands'
             on_press: root.open_command_popup()
+        Button:
+            size_hint: (1.0, None)
+            text: 'Run'
+            on_press: root.run()
         Label:
             size_hint: (1.0, None)
             text: '[color=cccccc][b]move right 2[/b][/color]\n[color=cccccc][b]move right 2[/b][/color]\n[color=cccccc][b]move right 2[/b][/color]\n'
