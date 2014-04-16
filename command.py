@@ -2,10 +2,15 @@ __author__ = 'arthurnum'
 
 
 from kivy.animation import Animation
+from kivy.uix.widget import Widget
+from kivy.uix.label import Label
 
 
-class Command:
-    pass
+class CommandLineWidget(Widget):
+    def __init__(self, **kwargs):
+        super(CommandLineWidget, self).__init__(**kwargs)
+        id_lane_label = Label(text='1.', size_hint=[0.2, 1.0])
+        self.add_widget(id_lane_label)
 
 
 class CommandMove:

@@ -8,6 +8,8 @@ from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from functools import partial
 from command import CommandMove
+from command import CommandLineWidget
+from kivy.uix.label import Label
 
 
 cells = []
@@ -16,11 +18,10 @@ commands = []
 
 class MainLayout(BoxLayout):
     cell_grid = ObjectProperty()
+    command_grid = ObjectProperty()
     voloda = ObjectProperty()
 
     def make(self):
-        commands.append(CommandMove())
-        commands.append(CommandMove())
         for x in range(5):
             cells.append([])
             for y in range(5):
@@ -49,8 +50,9 @@ class MainLayout(BoxLayout):
             command.do(self.voloda, cells)
 
     def define_button(self, *args):
-        print args
-        return False
+        commands.append(CommandMove())
+        self.command_grid.add_widget(Label(text='123123123', size_hint=[0.2, 1.0]))
+
 
 
 
