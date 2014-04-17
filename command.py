@@ -5,6 +5,7 @@ from kivy.animation import Animation
 from kivy.uix.widget import Widget
 from kivy.uix.label import Label
 from kivy.properties import ObjectProperty, NumericProperty, StringProperty
+from kivy.graphics import Color, Rectangle
 
 
 
@@ -21,6 +22,17 @@ class CommandLineWidget(Widget):
 
     def update(self, command):
         self.id_command_label.text = "%d." % command.cid
+
+    def on_touch_down(self, touch):
+        if self.collide_point(touch.x, touch.y):
+            with self.canvas.before:
+                Color(0.5, 0.6, 0.7)
+                Rectangle(pos=self.pos, size=self.size)
+        else:
+            with self.canvas.before:
+                Color(0.4, 0.5, 0.7)
+                Rectangle(pos=self.pos, size=self.size)
+
 
 
 class Command:

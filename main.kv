@@ -21,10 +21,11 @@
         size_hint: (0.3, 1.0)
         canvas:
             Color:
-                rgb: 0.4, 0.5, 0.6
+                rgb: 0.4, 0.5, 0.65
             Rectangle:
                 pos: self.pos
                 size: self.size
+        spacing: 1
         Button:
             size_hint: (1.0, None)
             text: 'Commands'
@@ -63,6 +64,12 @@
     text_command_label: text_command_label
     delete_button: delete_button
     size_hint: (1.0, 0.05)
+    canvas.before:
+        Color:
+            rgb: 0.4, 0.5, 0.7
+        Rectangle:
+            pos: self.pos
+            size: self.size
     BoxLayout:
         orientation: 'horizontal'
         pos: self.parent.pos
