@@ -10,6 +10,7 @@ from functools import partial
 from command import CommandMove
 from command import CommandLineWidget
 from kivy.uix.label import Label
+from kivy.animation import Animation
 
 
 cells = []
@@ -34,33 +35,33 @@ class MainLayout(BoxLayout):
     def open_command_popup(self):
         box = BoxLayout(orientation='vertical')
         box.add_widget(Button(text='hello', on_press=self.define_button))
-        box.add_widget(Button(text='hello', on_press=self.define_button))
-        box.add_widget(Button(text='hello', on_press=self.define_button))
-        box.add_widget(Button(text='hello', on_press=self.define_button))
-        box.add_widget(Button(text='hello', on_press=self.define_button))
-        box.add_widget(Button(text='hello', on_press=self.define_button))
-        box.add_widget(Button(text='hello', on_press=self.define_button))
-        box.add_widget(Button(text='hello', on_press=self.define_button))
         popup = Popup(title='Commands', content=box)
         popup.size_hint = (0.2, 0.8)
         popup.open()
 
     def run(self):
+        anim = Animation(duration=0.0)
         for command in commands:
-            command.do(self.voloda, cells)
+            anim += command.do(self.voloda, cells)
+        anim.start(self.voloda)
 
     def define_button(self, *args):
-        command = CommandMove(len(commands) + 1)
+        index = len(commands) + 1
+        command = CommandMove(index, ['west', 'north', 'east', 'south'][index % 4])
         commands.append(command)
-        command_widget = CommandLineWidget(command)
-        command_widget.delete_button.bind(on_press=partial(self.delete_command, command_widget))
+        command_widget = command.build_widget()
+        command_widget.delete_button.bind(on_press=partial(self.delete_command, command))
         self.command_grid.add_widget(command_widget)
 
 
-    def delete_command(self, command_widget, *args):
-        commands.remove(command_widget.command_link)
-        self.command_grid.remove_widget(command_widget)
-        command_widget = None
+    def delete_command(self, command, *args):
+        self.command_grid.remove_widget(command.command_widget)
+        commands.remove(command)
+        i = 1
+        for command in commands:
+            command.cid = i
+            command.update_widget()
+            i += 1
 
 
 class Cell(Widget):
@@ -72,3 +73,4 @@ class Voloda(Widget):
         super(Voloda, self).__init__(**kwargs)
         self.cell_x = 0
         self.cell_y = 0
+        self.face_to = 'north'

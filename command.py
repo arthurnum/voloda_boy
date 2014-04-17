@@ -18,24 +18,53 @@ class CommandLineWidget(Widget):
         super(CommandLineWidget, self).__init__(**kwargs)
         self.id_command_label.text = "%d." % command.cid
         self.text_command_label.text = command.text
-        self.command_link = command
+
+    def update(self, command):
+        self.id_command_label.text = "%d." % command.cid
 
 
 class Command:
     cid = NumericProperty(0)
     text = StringProperty('')
+    command_widget = ObjectProperty()
+
+    def build_widget(self):
+        self.command_widget = CommandLineWidget(self)
+        return self.command_widget
+
+    def update_widget(self):
+        self.command_widget.update(self)
 
 
 class CommandMove(Command):
-    def __init__(self, cid):
+    def __init__(self, cid, arg=None):
         self.cid = cid
         self.text = 'move'
+        self.arg = arg
 
     def do(self, voloda, cells):
-        voloda.cell_x += 1
+        if self.arg not in ['north', 'south', 'west', 'east']:
+            self.arg = voloda.face_to
+
         dest_cell = cells[voloda.cell_x][voloda.cell_y]
+
+        if self.arg == 'north':
+            voloda.cell_y += 1
+            dest_cell = cells[voloda.cell_x][voloda.cell_y]
+        elif self.arg == 'south':
+            voloda.cell_y -= 1
+            dest_cell = cells[voloda.cell_x][voloda.cell_y]
+        elif self.arg == 'west':
+            voloda.cell_x -= 1
+            dest_cell = cells[voloda.cell_x][voloda.cell_y]
+        elif self.arg == 'east':
+            voloda.cell_x += 1
+            dest_cell = cells[voloda.cell_x][voloda.cell_y]
+
+        voloda.face_to = self.arg
         anim = Animation(x=dest_cell.x, y=dest_cell.y, duration=0.5)
-        anim.start(voloda)
+        return anim
+        # anim.start(voloda)
 
 
 class CommandWait:
