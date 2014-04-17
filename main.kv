@@ -59,4 +59,27 @@
             size: self.size
 
 <CommandLineWidget>
-    size_hint: (1.0, 0.1)
+    id_command_label: id_command_label
+    text_command_label: text_command_label
+    delete_button: delete_button
+    size_hint: (1.0, 0.05)
+    BoxLayout:
+        orientation: 'horizontal'
+        pos: self.parent.pos
+        size: self.parent.size
+        Label:
+            id: id_command_label
+            size_hint: (0.15, 1.0)
+            text_size: self.size
+            halign: 'right'
+            valign: 'middle'
+        Label:
+            id: text_command_label
+            size_hint: (0.6, 1.0)
+        Button:
+            id: delete_button
+            size_hint: (0.2, 1.0)
+            Image:
+                source: 'images/jean_victor_balin_cross.png'
+                pos: self.parent.pos
+                size: self.parent.size

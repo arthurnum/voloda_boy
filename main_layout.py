@@ -50,11 +50,17 @@ class MainLayout(BoxLayout):
             command.do(self.voloda, cells)
 
     def define_button(self, *args):
-        commands.append(CommandMove())
-        self.command_grid.add_widget(Label(text='123123123', size_hint=[0.2, 1.0]))
+        command = CommandMove(len(commands) + 1)
+        commands.append(command)
+        command_widget = CommandLineWidget(command)
+        command_widget.delete_button.bind(on_press=partial(self.delete_command, command_widget))
+        self.command_grid.add_widget(command_widget)
 
 
-
+    def delete_command(self, command_widget, *args):
+        commands.remove(command_widget.command_link)
+        self.command_grid.remove_widget(command_widget)
+        command_widget = None
 
 
 class Cell(Widget):
