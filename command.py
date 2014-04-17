@@ -32,6 +32,8 @@ class CommandLineWidget(Widget):
             with self.canvas.before:
                 Color(0.4, 0.5, 0.7)
                 Rectangle(pos=self.pos, size=self.size)
+        for child in self.children:
+            child.on_touch_down(touch)
 
 
 
