@@ -7,7 +7,9 @@ from kivy.uix.label import Label
 from kivy.properties import ObjectProperty, NumericProperty, StringProperty
 from kivy.graphics import Color, Rectangle
 from kivy.uix.modalview import ModalView
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.stacklayout import StackLayout
+from kivy.uix.dropdown import DropDown
+from kivy.uix.button import Button
 
 
 
@@ -47,8 +49,24 @@ class CommandEditWidget(ModalView):
         self.background = 'images/modal_view.png'
         self.border = [0, 0, 0, 0]
         title = "%d. %s" % (command.cid, command.text)
-        self.size_hint = (None, None)
-        self.add_widget(Label(text=title))
+        self.size_hint = (0.5, 0.5)
+        layout = StackLayout()
+        layout.add_widget(Label(text=title, size_hint=[None, None]))
+        layout.add_widget(Label(text='Sho za huita', size_hint=[None, None]))
+        # create a dropdown with 10 buttons
+        dropdown = DropDown()
+        for index in range(10):
+            btn = Button(text='Value %d' % index, size_hint_y=None, height=22)
+            btn.bind(on_release=lambda btn: dropdown.select(btn.text))
+            dropdown.add_widget(btn)
+
+        mainbutton = Button(text='Hello', size_hint=(None, None))
+        mainbutton.bind(on_release=dropdown.open)
+        dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))
+
+        layout.add_widget(mainbutton)
+
+        self.add_widget(layout)
 
 
 class Command:
