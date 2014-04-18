@@ -52,7 +52,6 @@ class MainLayout(FloatLayout):
         command = CommandMove(index, ['west', 'north', 'east', 'south'][index % 4])
         commands.append(command)
         command_widget = command.build_widget()
-        command_widget.delete_button.bind(on_press=partial(self.delete_command, command))
         self.command_grid.add_widget(command_widget)
 
 

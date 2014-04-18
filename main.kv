@@ -57,7 +57,6 @@
 <CommandLineWidget>
     id_command_label: id_command_label
     text_command_label: text_command_label
-    delete_button: delete_button
     size_hint: (1.0, 0.05)
     canvas.before:
         Color:
@@ -78,10 +77,3 @@
         Label:
             id: text_command_label
             size_hint: (0.6, 1.0)
-        Button:
-            id: delete_button
-            size_hint: (0.2, 1.0)
-            Image:
-                source: 'images/jean_victor_balin_cross.png'
-                pos: self.parent.pos
-                size: self.parent.size
