@@ -24,13 +24,14 @@ class CommandLineWidget(Widget):
         self.id_command_label.text = "%d." % command.cid
 
     def on_touch_down(self, touch):
+        self.canvas.before.clear()
         if self.collide_point(touch.x, touch.y):
             with self.canvas.before:
-                Color(0.5, 0.6, 0.7)
+                Color(0.5, 0.6, 0.7, 0.33)
                 Rectangle(pos=self.pos, size=self.size)
         else:
             with self.canvas.before:
-                Color(0.4, 0.5, 0.7)
+                Color(1, 1, 1, 0)
                 Rectangle(pos=self.pos, size=self.size)
         for child in self.children:
             child.on_touch_down(touch)

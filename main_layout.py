@@ -3,6 +3,7 @@ __author__ = 'arthurnum'
 
 from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
@@ -17,20 +18,21 @@ cells = []
 commands = []
 
 
-class MainLayout(BoxLayout):
+class MainLayout(FloatLayout):
     cell_grid = ObjectProperty()
     command_grid = ObjectProperty()
     voloda = ObjectProperty()
 
     def make(self):
+        delta = 0.1
         for x in range(5):
             cells.append([])
             for y in range(5):
-                cell = Cell(pos_hint={'x': x * 0.2, 'y': y * 0.2})
+                cell = Cell(pos_hint={'x': x * 0.1 + delta, 'y': y * 0.1 + delta})
                 cells[x].append(cell)
                 self.cell_grid.add_widget(cell)
         self.voloda = Voloda()
-        self.cell_grid.add_widget(self.voloda)
+        # self.cell_grid.add_widget(self.voloda)
 
     def open_command_popup(self):
         box = BoxLayout(orientation='vertical')
