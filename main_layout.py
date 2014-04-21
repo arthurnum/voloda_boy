@@ -49,11 +49,10 @@ class MainLayout(FloatLayout):
 
     def define_button(self, *args):
         index = len(commands) + 1
-        command = CommandMove(index, ['west', 'north', 'east', 'south'][index % 4])
+        command = CommandMove(index)
         commands.append(command)
         command_widget = command.build_widget()
         self.command_grid.add_widget(command_widget)
-
 
     def delete_command(self, command, *args):
         self.command_grid.remove_widget(command.command_widget)

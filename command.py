@@ -8,8 +8,11 @@ from kivy.properties import ObjectProperty, NumericProperty, StringProperty
 from kivy.graphics import Color, Rectangle
 from kivy.uix.modalview import ModalView
 from kivy.uix.stacklayout import StackLayout
-from kivy.uix.dropdown import DropDown
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
+from kivy.uix.textinput import TextInput
+from functools import partial
 
 
 
@@ -48,25 +51,26 @@ class CommandEditWidget(ModalView):
         self.background_color = [0, 0, 0, .33]
         self.background = 'images/modal_view.png'
         self.border = [0, 0, 0, 0]
+        self.size_hint = (0.66, 0.5)
+        layout = StackLayout(spacing=1)
         title = "%d. %s" % (command.cid, command.text)
-        self.size_hint = (0.5, 0.5)
-        layout = StackLayout()
-        layout.add_widget(Label(text=title, size_hint=[None, None]))
-        layout.add_widget(Label(text='Sho za huita', size_hint=[None, None]))
-        # create a dropdown with 10 buttons
-        dropdown = DropDown()
-        for index in range(10):
-            btn = Button(text='Value %d' % index, size_hint_y=None, height=22)
-            btn.bind(on_release=lambda btn: dropdown.select(btn.text))
-            dropdown.add_widget(btn)
-
-        mainbutton = Button(text='Hello', size_hint=(None, None))
-        mainbutton.bind(on_release=dropdown.open)
-        dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))
-
-        layout.add_widget(mainbutton)
-
+        layout.add_widget(Label(text=title, size_hint=[1.0, 0.1]))
+        layout.add_widget(Label(text='Argument:', size_hint=[0.3, 0.12]))
+        self.arg_text_input = TextInput(text=str(command.arg), multiline=False, size_hint=[0.5, 0.12])
+        layout.add_widget(self.arg_text_input)
+        arg_box = BoxLayout(orientation='horizontal', spacing=1, size_hint=[1.0, 0.2])
+        for arg in command.get_available_args():
+            arg_box.add_widget(Button(text=str(arg), on_press=partial(self.set_argument, command, arg)))
+        layout.add_widget(arg_box)
+        layout.add_widget(Button(text='None', size_hint=[1.0, 0.2], on_press=partial(self.set_argument, command, None)))
+        delete_box = FloatLayout(size_hint=[1.0, 0.3])
+        delete_box.add_widget(Button(text='DELETE', size_hint=[0.3, 0.4], pos_hint={'x': 0.6, 'y': 0.0}))
+        layout.add_widget(delete_box)
         self.add_widget(layout)
+
+    def set_argument(self, command, arg, *args):
+        command.arg = arg
+        self.arg_text_input.text = str(arg)
 
 
 class Command:
@@ -89,25 +93,26 @@ class CommandMove(Command):
         self.arg = arg
 
     def do(self, voloda, cells):
-        if self.arg not in ['north', 'south', 'west', 'east']:
-            self.arg = voloda.face_to
+        dest = self.arg
+        if dest not in ['north', 'south', 'west', 'east']:
+            dest = voloda.face_to
 
         dest_cell = cells[voloda.cell_x][voloda.cell_y]
 
-        if self.arg == 'north':
+        if dest == 'north':
             voloda.cell_y += 1
             dest_cell = cells[voloda.cell_x][voloda.cell_y]
-        elif self.arg == 'south':
+        elif dest == 'south':
             voloda.cell_y -= 1
             dest_cell = cells[voloda.cell_x][voloda.cell_y]
-        elif self.arg == 'west':
+        elif dest == 'west':
             voloda.cell_x -= 1
             dest_cell = cells[voloda.cell_x][voloda.cell_y]
-        elif self.arg == 'east':
+        elif dest == 'east':
             voloda.cell_x += 1
             dest_cell = cells[voloda.cell_x][voloda.cell_y]
 
-        voloda.face_to = self.arg
+        voloda.face_to = dest
         anim = Animation(x=dest_cell.x, y=dest_cell.y, duration=0.5)
         return anim
 

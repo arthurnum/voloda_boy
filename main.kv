@@ -22,11 +22,11 @@
                 size: self.size
         spacing: 1
         Button:
-            size_hint: (1.0, None)
+            size_hint: (1.0, 0.1)
             text: 'Commands'
             on_press: root.open_command_popup()
         Button:
-            size_hint: (1.0, None)
+            size_hint: (1.0, 0.1)
             text: 'Run'
             on_press: root.run()
 
@@ -57,7 +57,7 @@
 <CommandLineWidget>
     id_command_label: id_command_label
     text_command_label: text_command_label
-    size_hint: (1.0, 0.05)
+    size_hint: (1.0, 0.075)
     canvas.before:
         Color:
             rgba: 1, 1, 1, 0
