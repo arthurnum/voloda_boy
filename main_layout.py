@@ -12,10 +12,10 @@ from command import CommandMove
 from command import CommandLineWidget
 from kivy.uix.label import Label
 from kivy.animation import Animation
+from command_stuff import global_command_stuff
 
 
 cells = []
-commands = []
 
 
 class MainLayout(FloatLayout):
@@ -43,25 +43,16 @@ class MainLayout(FloatLayout):
 
     def run(self):
         anim = Animation(duration=0.0)
-        for command in commands:
+        for command in global_command_stuff.commands:
             anim += command.do(self.voloda, cells)
         anim.start(self.voloda)
 
     def define_button(self, *args):
-        index = len(commands) + 1
+        index = len(global_command_stuff.commands) + 1
         command = CommandMove(index)
-        commands.append(command)
+        global_command_stuff.commands.append(command)
         command_widget = command.build_widget()
         self.command_grid.add_widget(command_widget)
-
-    def delete_command(self, command, *args):
-        self.command_grid.remove_widget(command.command_widget)
-        commands.remove(command)
-        i = 1
-        for command in commands:
-            command.cid = i
-            command.update_widget()
-            i += 1
 
 
 class Cell(Widget):
