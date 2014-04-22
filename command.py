@@ -96,10 +96,10 @@ class Command:
         self.command_widget.update(self)
 
 
-class CommandMove(Command):
+class CommandTurn(Command):
     def __init__(self, cid, arg=None):
         self.cid = cid
-        self.text = 'move'
+        self.text = 'turn'
         self.arg = arg
 
     def do(self, voloda, cells):

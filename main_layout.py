@@ -8,7 +8,7 @@ from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from functools import partial
-from command import CommandMove
+from command import CommandTurn
 from command import CommandLineWidget
 from kivy.uix.label import Label
 from kivy.animation import Animation
@@ -32,7 +32,8 @@ class MainLayout(FloatLayout):
                 cells[x].append(cell)
                 self.cell_grid.add_widget(cell)
         self.voloda = Voloda()
-        # self.cell_grid.add_widget(self.voloda)
+        self.cell_grid.add_widget(self.voloda)
+        self.cell_grid.add_widget(GoalDrop(pos_hint={'x': 0.2, 'y': 0.2}))
 
     def open_command_popup(self):
         box = BoxLayout(orientation='vertical')
@@ -49,7 +50,7 @@ class MainLayout(FloatLayout):
 
     def define_button(self, *args):
         index = len(global_command_stuff.commands) + 1
-        command = CommandMove(index)
+        command = CommandTurn(index)
         global_command_stuff.commands.append(command)
         command_widget = command.build_widget()
         self.command_grid.add_widget(command_widget)
@@ -65,3 +66,8 @@ class Voloda(Widget):
         self.cell_x = 0
         self.cell_y = 0
         self.face_to = 'north'
+
+
+class GoalDrop(Widget):
+    def __init__(self, **kwargs):
+        super(GoalDrop, self).__init__(**kwargs)
