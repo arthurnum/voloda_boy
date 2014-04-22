@@ -13,6 +13,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from functools import partial
+from command_stuff import global_command_stuff
 
 
 
@@ -28,6 +29,10 @@ class CommandLineWidget(Widget):
 
     def update(self, command):
         self.id_command_label.text = "%d." % command.cid
+        if command.arg is not None:
+            self.text_command_label.text = "%s %s" % (command.text, str(command.arg))
+        else:
+            self.text_command_label.text = command.text
 
     def on_touch_down(self, touch):
         self.canvas.before.clear()
@@ -64,13 +69,18 @@ class CommandEditWidget(ModalView):
         layout.add_widget(arg_box)
         layout.add_widget(Button(text='None', size_hint=[1.0, 0.2], on_press=partial(self.set_argument, command, None)))
         delete_box = FloatLayout(size_hint=[1.0, 0.3])
-        delete_box.add_widget(Button(text='DELETE', size_hint=[0.3, 0.4], pos_hint={'x': 0.6, 'y': 0.0}))
+        delete_box.add_widget(Button(text='DELETE', size_hint=[0.3, 0.4], pos_hint={'x': 0.6, 'y': 0.0}, on_press=partial(self.delete_command, command)))
         layout.add_widget(delete_box)
         self.add_widget(layout)
 
     def set_argument(self, command, arg, *args):
         command.arg = arg
         self.arg_text_input.text = str(arg)
+        command.update_widget()
+
+    def delete_command(self, command, *args):
+        global_command_stuff.delete_command(command)
+        self.dismiss()
 
 
 class Command:
@@ -94,7 +104,7 @@ class CommandMove(Command):
 
     def do(self, voloda, cells):
         dest = self.arg
-        if dest not in ['north', 'south', 'west', 'east']:
+        if dest not in self.get_available_args():
             dest = voloda.face_to
 
         dest_cell = cells[voloda.cell_x][voloda.cell_y]
