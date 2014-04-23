@@ -12,7 +12,7 @@
         size_hint: (0.7, 1.0)
     StackLayout:
         id: command_grid
-        pos_hint: {'x' : 0.7, 'y' : 0.05}
+        pos_hint: {'x': 0.7, 'y': 0.05}
         size_hint: (0.275, 0.9)
         canvas:
             Color:
@@ -64,7 +64,17 @@
             size: self.size
             pos: self.pos
 
-<CommandLineWidget>
+<StartPoint>:
+    size_hint: (0.1, 0.1)
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 0.75
+        Rectangle:
+            source: 'images/Letter-S-blue-icon.png'
+            size: self.size
+            pos: self.pos
+
+<CommandLineWidget>:
     id_command_label: id_command_label
     text_command_label: text_command_label
     size_hint: (1.0, 0.075)

@@ -1,0 +1,8 @@
+axis_x: 1
+axis_y: 3
+start:
+    x: 0
+    y: 0
+drops:
+    count: 1
+    coords: [{x: 0, y: 2}]

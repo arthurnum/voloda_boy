@@ -13,6 +13,7 @@ from command import CommandLineWidget
 from kivy.uix.label import Label
 from kivy.animation import Animation
 from command_stuff import global_command_stuff
+from task import Task
 
 
 cells = []
@@ -24,16 +25,17 @@ class MainLayout(FloatLayout):
     voloda = ObjectProperty()
 
     def make(self):
+        task = Task(1)
         delta = 0.1
-        for x in range(5):
+        for x in range(task.axis_x):
             cells.append([])
-            for y in range(5):
+            for y in range(task.axis_y):
                 cell = Cell(pos_hint={'x': x * 0.1 + delta, 'y': y * 0.1 + delta})
                 cells[x].append(cell)
                 self.cell_grid.add_widget(cell)
-        self.voloda = Voloda()
-        self.cell_grid.add_widget(self.voloda)
+        self.voloda = Voloda(cell_x=task.start_x, cell_y=task.start_y)
         self.cell_grid.add_widget(GoalDrop(pos_hint={'x': 0.2, 'y': 0.2}))
+        self.cell_grid.add_widget(StartPoint(pos_hint=cells[task.start_x][task.start_y].pos_hint))
 
     def open_command_popup(self):
         box = BoxLayout(orientation='vertical')
@@ -43,6 +45,8 @@ class MainLayout(FloatLayout):
         popup.open()
 
     def run(self):
+        self.voloda.pos = cells[self.voloda.cell_x][self.voloda.cell_y].pos
+        self.cell_grid.add_widget(self.voloda)
         anim = Animation(duration=0.0)
         for command in global_command_stuff.commands:
             anim += command.do(self.voloda, cells)
@@ -63,11 +67,16 @@ class Cell(Widget):
 class Voloda(Widget):
     def __init__(self, **kwargs):
         super(Voloda, self).__init__(**kwargs)
-        self.cell_x = 0
-        self.cell_y = 0
+        self.cell_x = kwargs['cell_x']
+        self.cell_y = kwargs['cell_y']
         self.face_to = 'north'
 
 
 class GoalDrop(Widget):
     def __init__(self, **kwargs):
         super(GoalDrop, self).__init__(**kwargs)
+
+
+class StartPoint(Widget):
+    def __init__(self, **kwargs):
+        super(StartPoint, self).__init__(**kwargs)

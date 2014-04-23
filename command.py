@@ -107,20 +107,16 @@ class CommandTurn(Command):
         if dest not in self.get_available_args():
             dest = voloda.face_to
 
-        dest_cell = cells[voloda.cell_x][voloda.cell_y]
-
         if dest == 'north':
             voloda.cell_y += 1
-            dest_cell = cells[voloda.cell_x][voloda.cell_y]
         elif dest == 'south':
             voloda.cell_y -= 1
-            dest_cell = cells[voloda.cell_x][voloda.cell_y]
         elif dest == 'west':
             voloda.cell_x -= 1
-            dest_cell = cells[voloda.cell_x][voloda.cell_y]
         elif dest == 'east':
             voloda.cell_x += 1
-            dest_cell = cells[voloda.cell_x][voloda.cell_y]
+
+        dest_cell = cells[voloda.cell_x][voloda.cell_y]
 
         voloda.face_to = dest
         anim = Animation(x=dest_cell.x, y=dest_cell.y, duration=0.5)
@@ -131,8 +127,5 @@ class CommandTurn(Command):
 
 
 class CommandWait:
-
     def do(self):
         pass
-
-
