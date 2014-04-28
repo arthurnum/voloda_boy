@@ -48,10 +48,7 @@ class MainLayout(FloatLayout):
         self.voloda.cell_y = self.task.start_y
         self.voloda.pos = self.task.cells[self.voloda.cell_x][self.voloda.cell_y].pos
         self.cell_grid.add_widget(self.voloda)
-        animator = Animator()
-        for command in global_command_stuff.commands:
-            animator.add_animation({'animation': command.do(self.voloda, self.task.cells), 'widget': self.voloda})
-        animator.play()
+        Animator().play(global_command_stuff.commands, self.task, self.voloda)
 
     def define_button(self, *args):
         index = len(global_command_stuff.commands) + 1

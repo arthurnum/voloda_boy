@@ -6,17 +6,12 @@ from functools import partial
 
 
 class Animator:
-    def __init__(self):
-        self.animations = []
 
-    def add_animation(self, animation):
-        self.animations.append(animation)
-
-    def play(self):
+    def play(self, commands, task, voloda):
         delay = 0.0
-        for animation in self.animations:
-            Clock.schedule_once(partial(self.schedule_animation, animation['animation'], animation['widget']), delay)
+        for command in commands:
+            Clock.schedule_once(partial(self.schedule_animation, command, task, voloda), delay)
             delay += 0.5
 
-    def schedule_animation(self, animation, widget, *args):
-        animation.start(widget)
+    def schedule_animation(self, command, task, voloda, *args):
+        command.do(voloda, task.cells).start(voloda)
