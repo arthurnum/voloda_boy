@@ -17,9 +17,6 @@ from task import Task
 from animator import Animator
 
 
-cells = []
-
-
 class MainLayout(FloatLayout):
     cell_grid = ObjectProperty()
     command_grid = ObjectProperty()
@@ -30,17 +27,13 @@ class MainLayout(FloatLayout):
         self.task = Task(1)
 
     def make(self):
-        delta = 0.1
-        for x in range(self.task.axis_x):
-            cells.append([])
-            for y in range(self.task.axis_y):
-                cell = Cell(pos_hint={'x': x * 0.1 + delta, 'y': y * 0.1 + delta})
-                cells[x].append(cell)
+        for row in self.task.cells:
+            for cell in row:
                 self.cell_grid.add_widget(cell)
-        self.voloda = Voloda(cell_x=self.task.start_x, cell_y=self.task.start_y)
-        for coord in self.task.drops_coords:
-            self.cell_grid.add_widget(GoalDrop(pos_hint=cells[coord['x']][coord['y']].pos_hint))
-        self.cell_grid.add_widget(StartPoint(pos_hint=cells[self.task.start_x][self.task.start_y].pos_hint))
+        self.voloda = self.task.get_voloda()
+        for goal_drop in self.task.get_goal_drops():
+            self.cell_grid.add_widget(goal_drop)
+        self.cell_grid.add_widget(self.task.get_start_point())
 
     def open_command_popup(self):
         box = BoxLayout(orientation='vertical')
@@ -53,11 +46,11 @@ class MainLayout(FloatLayout):
         self.cell_grid.remove_widget(self.voloda)
         self.voloda.cell_x = self.task.start_x
         self.voloda.cell_y = self.task.start_y
-        self.voloda.pos = cells[self.voloda.cell_x][self.voloda.cell_y].pos
+        self.voloda.pos = self.task.cells[self.voloda.cell_x][self.voloda.cell_y].pos
         self.cell_grid.add_widget(self.voloda)
         animator = Animator()
         for command in global_command_stuff.commands:
-            animator.add_animation({'animation': command.do(self.voloda, cells), 'widget': self.voloda})
+            animator.add_animation({'animation': command.do(self.voloda, self.task.cells), 'widget': self.voloda})
         animator.play()
 
     def define_button(self, *args):
@@ -66,25 +59,3 @@ class MainLayout(FloatLayout):
         global_command_stuff.commands.append(command)
         command_widget = command.build_widget()
         self.command_grid.add_widget(command_widget)
-
-
-class Cell(Widget):
-    pass
-
-
-class Voloda(Widget):
-    def __init__(self, **kwargs):
-        super(Voloda, self).__init__(**kwargs)
-        self.cell_x = kwargs['cell_x']
-        self.cell_y = kwargs['cell_y']
-        self.face_to = 'north'
-
-
-class GoalDrop(Widget):
-    def __init__(self, **kwargs):
-        super(GoalDrop, self).__init__(**kwargs)
-
-
-class StartPoint(Widget):
-    def __init__(self, **kwargs):
-        super(StartPoint, self).__init__(**kwargs)

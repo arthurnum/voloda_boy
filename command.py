@@ -16,7 +16,6 @@ from functools import partial
 from command_stuff import global_command_stuff
 
 
-
 class CommandLineWidget(Widget):
     id_command_label = ObjectProperty()
     text_command_label = ObjectProperty()
