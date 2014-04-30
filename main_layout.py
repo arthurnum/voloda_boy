@@ -32,6 +32,7 @@ class MainLayout(FloatLayout):
                 self.cell_grid.add_widget(cell)
         self.voloda = self.task.get_voloda()
         for goal_drop in self.task.get_goal_drops():
+            self.drop = goal_drop
             self.cell_grid.add_widget(goal_drop)
         self.cell_grid.add_widget(self.task.get_start_point())
 
@@ -43,6 +44,10 @@ class MainLayout(FloatLayout):
         popup.open()
 
     def run(self):
+        self.drop.pos_hint = {}
+        anim = Animation(pos=[50, 10], t='in_out_back')
+        anim &= Animation(size_hint=(0.066, 0.066))
+        anim.start(self.drop)
         self.cell_grid.remove_widget(self.voloda)
         self.voloda.cell_x = self.task.start_x
         self.voloda.cell_y = self.task.start_y

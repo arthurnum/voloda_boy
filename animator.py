@@ -15,3 +15,4 @@ class Animator:
 
     def schedule_animation(self, command, task, voloda, *args):
         command.do(voloda, task.cells).start(voloda)
+        task.check_drops_collide(voloda)

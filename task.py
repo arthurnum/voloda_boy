@@ -40,3 +40,7 @@ class Task():
 
     def get_start_point(self):
         return StartPoint(pos_hint=self.cells[self.start_x][self.start_y].pos_hint)
+
+    def check_drops_collide(self, voloda):
+        for coord in self.drops_coords:
+            pass

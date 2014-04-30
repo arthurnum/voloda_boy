@@ -28,12 +28,3 @@ class Voloda(Widget):
         self.cell_x = kwargs['cell_x']
         self.cell_y = kwargs['cell_y']
         self.face_to = 'north'
-
-    def on_cell_x(self, instance, value):
-        self.check_position(value)
-
-    def on_cell_y(self, instance, value):
-        self.check_position(value)
-
-    def check_position(self, value):
-        pass
