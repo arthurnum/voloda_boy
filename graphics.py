@@ -10,8 +10,12 @@ class Cell(Widget):
 
 
 class GoalDrop(Widget):
-    def __init__(self, **kwargs):
+    def __init__(self, x, y, **kwargs):
         super(GoalDrop, self).__init__(**kwargs)
+        self.free = True
+        self.cell_x = x
+        self.cell_y = y
+
 
 
 class StartPoint(Widget):
@@ -28,3 +32,17 @@ class Voloda(Widget):
         self.cell_x = kwargs['cell_x']
         self.cell_y = kwargs['cell_y']
         self.face_to = 'north'
+
+
+class DropScore(Widget):
+    def __init__(self, **kwargs):
+        super(DropScore, self).__init__(**kwargs)
+
+
+class DropScoreBoard:
+    def __init__(self, count):
+        self.filled = 0
+        delta = 0.1
+        self.drops = []
+        for x in range(count):
+            self.drops.append(DropScore(pos_hint={'x': x * 0.1 + delta, 'y': 0.02}))

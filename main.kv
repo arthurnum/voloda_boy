@@ -10,21 +10,6 @@
     FloatLayout:
         id: cell_grid
         size_hint: (0.7, 1.0)
-        Widget:
-            pos: (50, 10)
-            size_hint: (0.066, 0.066)
-            canvas:
-                Color:
-                    rgba: 0.1, 0.1, 0.1, 0.66
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
-                Color:
-                    rgba: 0.75, 0.75, 0.75, 1
-                Rectangle:
-                    source: 'images/yves_guillou_drop.png'
-                    size: self.size
-                    pos: self.pos
 
     StackLayout:
         id: command_grid
@@ -118,3 +103,18 @@
     background_normal: 'images/button_normal.png'
     background_down: 'images/button_down.png'
     border: [0, 0, 0, 0]
+
+<DropScore>:
+    size_hint: (0.06, 0.06)
+    canvas:
+        Color:
+            rgba: 0.1, 0.1, 0.1, 0.66
+        Rectangle:
+            size: self.size
+            pos: self.pos
+        Color:
+            rgba: 0.8, 0.8, 0.8, 0.75
+        Rectangle:
+            source: 'images/yves_guillou_drop.png'
+            size: self.size
+            pos: self.pos
