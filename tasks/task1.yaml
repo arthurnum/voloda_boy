@@ -1,8 +1,8 @@
 axis_x: 1
-axis_y: 3
+axis_y: 5
 start:
     x: 0
     y: 0
 drops:
-    count: 2
-    coords: [{x: 0, y: 2}, {x: 0, y: 1}]
+    count: 4
+    coords: [{x: 0, y: 2}, {x: 0, y: 1}, {x: 0, y: 3}, {x: 0, y: 4}]

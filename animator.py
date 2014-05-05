@@ -8,11 +8,12 @@ from kivy.animation import Animation
 
 class Animator:
 
-    def play(self, commands, task, voloda):
+    def play(self, commands, task, voloda, after_play_callback):
         delay = 0.0
         for command in commands:
             Clock.schedule_once(partial(self.schedule_voloda_animation, command, task, voloda), delay)
             delay += 0.5
+        Clock.schedule_once(after_play_callback, delay + 1.5)
 
     def schedule_voloda_animation(self, command, task, voloda, *args):
         command.do(voloda, task.cells).start(voloda)

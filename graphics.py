@@ -45,4 +45,4 @@ class DropScoreBoard:
         delta = 0.1
         self.drops = []
         for x in range(count):
-            self.drops.append(DropScore(pos_hint={'x': x * 0.1 + delta, 'y': 0.02}))
+            self.drops.append(DropScore(pos_hint={'x': x * 0.06 + delta, 'y': 0.02}))

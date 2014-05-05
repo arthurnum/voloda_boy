@@ -49,4 +49,13 @@ class Task():
         for goal_drop in self.goal_drops:
             if goal_drop.free:
                 if (voloda.cell_x == goal_drop.cell_x) and (voloda.cell_y == goal_drop.cell_y):
+                    goal_drop.free = False
                     Animator().schedule_drop_score_animation(goal_drop, self.drops_board)
+
+    def reset_goal_drops(self):
+        self.drops_board.filled = 0
+        for goal_drop in self.goal_drops:
+            if not goal_drop.free:
+                goal_drop.free = True
+                goal_drop.size_hint = (0.1, 0.1)
+                goal_drop.pos = self.cells[goal_drop.cell_x][goal_drop.cell_y].pos
