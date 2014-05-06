@@ -17,7 +17,6 @@ class GoalDrop(Widget):
         self.cell_y = y
 
 
-
 class StartPoint(Widget):
     def __init__(self, **kwargs):
         super(StartPoint, self).__init__(**kwargs)

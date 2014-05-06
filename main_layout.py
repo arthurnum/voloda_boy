@@ -24,7 +24,8 @@ class MainLayout(FloatLayout):
 
     def __init__(self, **kwargs):
         super(MainLayout, self).__init__(**kwargs)
-        self.task = Task(1)
+        self.task_number = 1
+        self.task = Task(self.task_number)
         self.locked = False
 
     # http://stackoverflow.com/questions/7590682/access-self-from-decorator
@@ -75,8 +76,15 @@ class MainLayout(FloatLayout):
 
     def after_play(self, *args):
         if self.task.drops_board.filled == self.task.drops_count:
-            pass
+            self.next_task()
         else:
             self.cell_grid.remove_widget(self.voloda)
             self.task.reset_goal_drops()
             self.locked = False
+
+    def next_task(self):
+        self.locked = False
+        self.task_number += 1
+        self.cell_grid.clear_widgets()
+        self.task = Task(self.task_number)
+        self.make()
