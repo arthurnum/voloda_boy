@@ -12,7 +12,6 @@
         size_hint: (0.7, 1.0)
 
     StackLayout:
-        id: command_grid
         pos_hint: {'x': 0.725, 'y': 0.05}
         size_hint: (0.25, 0.9)
         canvas:
@@ -30,6 +29,11 @@
             size_hint: (1.0, 0.1)
             text: 'Run'
             on_press: root.run()
+        ScrollView:
+            size_hint: (1.0, 0.75)
+            StackLayout:
+                id: command_grid
+                size_hint_y: None
 
 
 <Cell>:
@@ -78,7 +82,7 @@
 <CommandLineWidget>:
     id_command_label: id_command_label
     text_command_label: text_command_label
-    size_hint: (1.0, 0.075)
+    size_hint: (1.0, None)
     canvas.before:
         Color:
             rgba: 1, 1, 1, 0

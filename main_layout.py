@@ -27,6 +27,7 @@ class MainLayout(FloatLayout):
         self.task_number = 1
         self.task = Task(self.task_number)
         self.locked = False
+        self.command_grid.bind(minimum_height=self.command_grid.setter('height'))
 
     # http://stackoverflow.com/questions/7590682/access-self-from-decorator
     def lock(func):
@@ -66,6 +67,7 @@ class MainLayout(FloatLayout):
         command = type(index)
         global_command_stuff.commands.append(command)
         command_widget = command.build_widget()
+        command_widget.height = self.command_grid.parent.height * 0.085
         self.command_grid.add_widget(command_widget)
 
     def reset_voloda(self):
