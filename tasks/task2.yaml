@@ -5,4 +5,4 @@ start:
     y: 1
 drops:
     count: 2
-    coords: [{x: 0, y: 2}, {x: 1, y: 3}
+    coords: [{x: 0, y: 2}, {x: 1, y: 3}]

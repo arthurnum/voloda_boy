@@ -8,7 +8,7 @@ from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from functools import partial
-from command import CommandTurn
+from command import CommandMove
 from command import CommandLineWidget
 from kivy.uix.label import Label
 from kivy.animation import Animation
@@ -50,7 +50,7 @@ class MainLayout(FloatLayout):
     @lock
     def open_command_popup(self):
         box = BoxLayout(orientation='vertical')
-        box.add_widget(Button(text='hello', on_press=self.define_button))
+        box.add_widget(Button(text='MOVE', on_press=partial(self.define_button, CommandMove)))
         popup = Popup(title='Commands', content=box)
         popup.size_hint = (0.2, 0.8)
         popup.open()
@@ -61,9 +61,9 @@ class MainLayout(FloatLayout):
         self.reset_voloda()
         Animator().play(global_command_stuff.commands, self.task, self.voloda, self.after_play)
 
-    def define_button(self, *args):
+    def define_button(self, type, *args):
         index = len(global_command_stuff.commands) + 1
-        command = CommandTurn(index)
+        command = type(index)
         global_command_stuff.commands.append(command)
         command_widget = command.build_widget()
         self.command_grid.add_widget(command_widget)

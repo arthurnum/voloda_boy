@@ -14,7 +14,7 @@ Builder.load_file('main.kv')
 class MyApp(App):
 
     def build(self):
-        # Window.size = (960, 600)
+        Window.size = (960, 600)
         layout = MainLayout()
         layout.make()
         global_command_stuff.link_to_command_grid = layout.command_grid

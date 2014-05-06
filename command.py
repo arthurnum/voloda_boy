@@ -95,10 +95,10 @@ class Command:
         self.command_widget.update(self)
 
 
-class CommandTurn(Command):
+class CommandMove(Command):
     def __init__(self, cid, arg=None):
         self.cid = cid
-        self.text = 'turn'
+        self.text = 'move'
         self.arg = arg
 
     def do(self, voloda, cells):
@@ -106,13 +106,13 @@ class CommandTurn(Command):
         if dest not in self.get_available_args():
             dest = voloda.face_to
 
-        if dest == 'north':
+        if dest == 'up':
             voloda.cell_y += 1
-        elif dest == 'south':
+        elif dest == 'down':
             voloda.cell_y -= 1
-        elif dest == 'west':
+        elif dest == 'left':
             voloda.cell_x -= 1
-        elif dest == 'east':
+        elif dest == 'right':
             voloda.cell_x += 1
 
         dest_cell = cells[voloda.cell_x][voloda.cell_y]
@@ -122,7 +122,7 @@ class CommandTurn(Command):
         return anim
 
     def get_available_args(self):
-        return ['north', 'south', 'west', 'east']
+        return ['up', 'down', 'left', 'right']
 
 
 class CommandWait:

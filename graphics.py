@@ -30,7 +30,7 @@ class Voloda(Widget):
         super(Voloda, self).__init__(**kwargs)
         self.cell_x = kwargs['cell_x']
         self.cell_y = kwargs['cell_y']
-        self.face_to = 'north'
+        self.face_to = 'up'
 
 
 class DropScore(Widget):
