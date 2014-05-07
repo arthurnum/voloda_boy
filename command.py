@@ -52,16 +52,12 @@ class CommandLineWidget(Widget):
 class CommandEditWidget(ModalView):
     def __init__(self, command, **kwargs):
         super(CommandEditWidget, self).__init__(**kwargs)
-        self.background_color = [0, 0, 0, .33]
-        self.background = 'images/modal_view.png'
-        self.border = [0, 0, 0, 0]
-        self.size_hint = (0.66, 0.5)
         layout = StackLayout(spacing=1)
         title = "%d. %s" % (command.cid, command.text)
         layout.add_widget(Label(text=title, size_hint=[1.0, 0.1]))
         layout.add_widget(Label(text='Argument:', size_hint=[0.3, 0.12]))
-        self.arg_text_input = TextInput(text=str(command.arg), multiline=False, size_hint=[0.5, 0.12])
-        layout.add_widget(self.arg_text_input)
+        self.arg_label = Label(text=str(command.arg), multiline=False, size_hint=[0.5, 0.12])
+        layout.add_widget(self.arg_label)
         arg_box = BoxLayout(orientation='horizontal', spacing=1, size_hint=[1.0, 0.2])
         for arg in command.get_available_args():
             arg_box.add_widget(Button(text=str(arg), on_press=partial(self.set_argument, command, arg)))
@@ -74,7 +70,7 @@ class CommandEditWidget(ModalView):
 
     def set_argument(self, command, arg, *args):
         command.arg = arg
-        self.arg_text_input.text = str(arg)
+        self.arg_label.text = str(arg)
         command.update_widget()
 
     def delete_command(self, command, *args):
