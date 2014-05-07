@@ -24,7 +24,7 @@ class MainLayout(FloatLayout):
 
     def __init__(self, **kwargs):
         super(MainLayout, self).__init__(**kwargs)
-        self.task_number = 1
+        self.task_number = 0
         self.task = Task(self.task_number)
         self.locked = False
         self.command_grid.bind(minimum_height=self.command_grid.setter('height'))

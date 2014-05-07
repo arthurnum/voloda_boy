@@ -1,17 +1,41 @@
 __author__ = 'arthurnum'
 
 
-import yaml
 from animator import Animator
 from graphics import *
 
 
+LEVELS = [
+    {
+        'axis_x': 1,
+        'axis_y': 5,
+        'start': {
+            'x': 0,
+            'y': 0
+        },
+        'drops': {
+            'count': 4,
+            'coords': [{'x': 0, 'y': 2}, {'x': 0, 'y': 1}, {'x': 0, 'y': 3}, {'x': 0, 'y': 4}]
+        }
+    },
+    {
+        'axis_x': 2,
+        'axis_y': 5,
+        'start': {
+            'x': 1,
+            'y': 1
+        },
+        'drops': {
+            'count': 2,
+            'coords': [{'x': 0, 'y': 2}, {'x': 1, 'y': 3}]
+        }
+    },
+]
+
+
 class Task():
     def __init__(self, task_number):
-        file_name = "tasks/task%d.yaml" % task_number
-        stream = open(file_name, 'r')
-        data = yaml.load(stream)
-        stream.close()
+        data = LEVELS[task_number]
         self.axis_x = data['axis_x']
         self.axis_y = data['axis_y']
         self.start_x = data['start']['x']
